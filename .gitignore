@@ -1,0 +1,54 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environment
+.venv/
+env/
+venv/
+
+# VS Code
+.vscode/
+
+# macOS
+.DS_Store
+
+# Environment variables
+.env
+*.env
+
+# Logs
+*.log
+
+# Python egg info
+*.egg-info/
+dist/
+build/
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints
+
+# MyPy cache
+.mypy_cache/
+
+# Coverage reports
+htmlcov/
+.coverage
+.tox/
+.nox/
+
+# Pytest
+.cache/
+
+# IDEs
+.idea/
+*.swp
+
+# Pydantic compiled schema cache
+__pydantic_cache__/
+
+# Langchain
+langchain.db
+langchain.yaml
+langchain_logs/
