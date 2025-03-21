@@ -1,6 +1,7 @@
 import os
 import re
 from dotenv import load_dotenv
+from langchain.prompts import PromptTemplate
 from langchain.memory import ConversationBufferMemory
 from langchain.schema import HumanMessage
 
@@ -8,6 +9,17 @@ from models.Boleto import Boleto
 from api_client import buscar_boleto_por_cpf
 
 load_dotenv()
+
+# Prompt Template para extração de CPF
+cpf_prompt_template = PromptTemplate(
+    input_variables=["pergunta"],
+    template=(
+        "A partir da pergunta abaixo, extraia apenas o CPF do usuário.\n"
+        "O CPF deve conter exatamente 11 dígitos, apenas números, sem pontos ou traços.\n"
+        "Pergunta: {pergunta}\n"
+        "CPF extraído (apenas números):"
+    )
+)
 
 # Memória da conversa
 memory = ConversationBufferMemory(memory_key="chat_history", return_messages=True)
