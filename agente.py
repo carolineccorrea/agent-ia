@@ -7,7 +7,6 @@ from dotenv import load_dotenv
 
 from ConsultaBoleto import ConsultaBoleto
 from llm_client import llm
-import asyncio
 
 load_dotenv()
 
@@ -20,7 +19,8 @@ class Agente:
         tools = [
             Tool(
                 name=consulta_boleto_instance.name,
-                func=lambda x: asyncio.run(consulta_boleto_instance.run(x)),  # wrap async to sync
+                func=consulta_boleto_instance.run,  # Mantém como função async
+                coroutine=consulta_boleto_instance.run,  # Registra como coroutine correta
                 description=consulta_boleto_instance.description
             )
         ]
