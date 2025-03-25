@@ -17,16 +17,21 @@ class Agente:
         consulta_boleto_instance = ConsultaBoleto()
 
         tools = [
-            Tool(
+            Tool.from_function(
+                func=consulta_boleto_instance.run,
                 name=consulta_boleto_instance.name,
-                func=consulta_boleto_instance.run,  # Mantém como função async
-                coroutine=consulta_boleto_instance.run,  # Registra como coroutine correta
-                description=consulta_boleto_instance.description
+                description=consulta_boleto_instance.description,
+                coroutine=consulta_boleto_instance.run
             )
         ]
 
         prompt = hub.pull("hwchase17/openai-functions-agent")
-        agente = create_openai_tools_agent(llm, tools, prompt)
+
+        agente = create_openai_tools_agent(
+            llm=llm,
+            tools=tools,
+            prompt=prompt
+        )
 
         self.executor = AgentExecutor(
             agent=agente,
