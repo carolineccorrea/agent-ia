@@ -7,7 +7,6 @@ from dotenv import load_dotenv
 
 from ConsultaBoleto import ConsultaBoleto
 from llm_client import llm
-import asyncio
 
 load_dotenv()
 
@@ -18,15 +17,21 @@ class Agente:
         consulta_boleto_instance = ConsultaBoleto()
 
         tools = [
-            Tool(
+            Tool.from_function(
+                func=consulta_boleto_instance.run,
                 name=consulta_boleto_instance.name,
-                func=lambda x: asyncio.run(consulta_boleto_instance.run(x)),  # wrap async to sync
-                description=consulta_boleto_instance.description
+                description=consulta_boleto_instance.description,
+                coroutine=consulta_boleto_instance.run
             )
         ]
 
         prompt = hub.pull("hwchase17/openai-functions-agent")
-        agente = create_openai_tools_agent(llm, tools, prompt)
+
+        agente = create_openai_tools_agent(
+            llm=llm,
+            tools=tools,
+            prompt=prompt
+        )
 
         self.executor = AgentExecutor(
             agent=agente,
